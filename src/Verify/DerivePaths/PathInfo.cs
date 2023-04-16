@@ -20,13 +20,14 @@ public readonly struct PathInfo
         Directory = directory;
     }
 
-    #region defaultDerivePathInfo
+    #region defaultDerivePath
 
     internal static PathInfo DeriveDefault(
         string sourceFile,
         string projectDirectory,
         Type type,
-        MethodInfo method) =>
+        MethodInfo method,
+        IReadOnlyDictionary<string, object> context) =>
         new(
             directory: IoHelpers.ResolveDirectoryFromSourceFile(sourceFile),
             typeName: type.NameWithParent(),
@@ -37,7 +38,8 @@ public readonly struct PathInfo
         string sourceFile,
         string projectDirectory,
         string typeName,
-        string methodName) =>
+        string methodName,
+        IReadOnlyDictionary<string, object> context) =>
         new(
             directory: IoHelpers.ResolveDirectoryFromSourceFile(sourceFile),
             typeName: typeName,

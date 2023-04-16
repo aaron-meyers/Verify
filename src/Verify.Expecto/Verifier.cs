@@ -22,7 +22,7 @@ public static partial class Verifier
         sourceFile = IoHelpers.GetMappedBuildPath(sourceFile) ?? sourceFile;
         var fileName = Path.GetFileNameWithoutExtension(sourceFile);
 
-        var pathInfo = GetPathInfo(sourceFile, fileName, methodName);
+        var pathInfo = GetPathInfo(sourceFile, fileName, methodName, settings.Context);
         return new(sourceFile, settings, fileName, methodName, null, pathInfo);
     }
 

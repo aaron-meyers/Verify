@@ -4,8 +4,8 @@ public class Tests
     [Fact]
     public Task Test()
     {
-        DerivePathInfo(
-            (sourceFile, projectDirectory, methodName, typeName) =>
+        DerivePath(
+            (sourceFile, projectDirectory, methodName, typeName, context) =>
             {
                 Assert.True(File.Exists(sourceFile));
                 Assert.True(Directory.Exists(projectDirectory));
@@ -21,28 +21,28 @@ public class Tests
     [Fact]
     public Task ReturnNulls()
     {
-        DerivePathInfo((_, _, _, _) => new(null));
+        DerivePath((_, _, _, _, _) => new(null));
         return Verify("Value");
     }
 
     [Fact]
     public Task InvalidMethod()
     {
-        DerivePathInfo((_, _, _, _) => new(null, null, Path.GetInvalidFileNameChars().First().ToString()));
+        DerivePath((_, _, _, _, _) => new(null, null, Path.GetInvalidFileNameChars().First().ToString()));
         return Assert.ThrowsAsync<ArgumentException>(() => Verify("Value"));
     }
 
     [Fact]
     public Task InvalidType()
     {
-        DerivePathInfo((_, _, _, _) => new(null, Path.GetInvalidFileNameChars().First().ToString()));
+        DerivePath((_, _, _, _, _) => new(null, Path.GetInvalidFileNameChars().First().ToString()));
         return Assert.ThrowsAsync<ArgumentException>(() => Verify("Value"));
     }
 
     [Fact]
     public Task InvalidDirectory()
     {
-        DerivePathInfo((_, _, _, _) => new(Path.GetInvalidPathChars().First().ToString()));
+        DerivePath((_, _, _, _, _) => new(Path.GetInvalidPathChars().First().ToString()));
         return Assert.ThrowsAsync<ArgumentException>(() => Verify("Value"));
     }
 }

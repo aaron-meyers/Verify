@@ -36,7 +36,7 @@ public abstract partial class VerifyBase
         TargetAssembly.Assign(type.Assembly);
         var method = FindMethod(type, testNameSpan);
 
-        var pathInfo = GetPathInfo(sourceFile, type, method);
+        var pathInfo = GetPathInfo(sourceFile, type, method, settings.Context);
         return new(
             sourceFile,
             settings,

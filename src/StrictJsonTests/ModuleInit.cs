@@ -9,7 +9,7 @@ public static class ModuleInit
     #endregion
 
     [ModuleInitializer]
-    public static void InitDerivePathInfo() =>
-        DerivePathInfo(
-            (_, _, type, method) => new(AttributeReader.GetProjectDirectory(), typeName: type.Name, method.Name));
+    public static void InitDerivePath() =>
+        DerivePath(
+            (_, _, type, method, _) => new(AttributeReader.GetProjectDirectory(), typeName: type.Name, method.Name));
 }

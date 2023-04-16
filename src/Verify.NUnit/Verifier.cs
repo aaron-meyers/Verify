@@ -46,7 +46,7 @@ public static partial class Verifier
 
         var method = test.Method.MethodInfo;
 
-        var pathInfo = GetPathInfo(sourceFile, type, method);
+        var pathInfo = GetPathInfo(sourceFile, type, method, settings.Context);
         return new(
             sourceFile,
             settings,
