@@ -501,9 +501,9 @@ Debug.WriteLine(Namer.RuntimeAndVersion);
 <!-- endSnippet -->
 
 
-## DerivePathInfo
+## DerivePath
 
-`DerivePathInfo` allows the storage directory of `.verified.` files to be customized based on the current context. The contextual parameters are parameters passed are as follows:
+`DerivePath` allows the storage directory of `.verified.` files to be customized based on the current context. The contextual parameters are parameters passed are as follows:
 
  * `sourceFile`: The full path to the file that the test existed in at compile time.
  * `projectDirectory`: The directory that the project existed in at compile time.
@@ -512,41 +512,42 @@ Debug.WriteLine(Namer.RuntimeAndVersion);
 
 For example to place all `.verified.` files in a `{ProjectDirectory}\Snapshots` the following could be used:
 
-<!-- snippet: DerivePathInfo -->
-<a id='snippet-derivepathinfo'></a>
+<!-- snippet: DerivePath -->
+<a id='snippet-derivepath'></a>
 ```cs
-Verifier.DerivePathInfo(
-    (sourceFile, projectDirectory, type, method) => new(
+Verifier.DerivePath(
+    (sourceFile, projectDirectory, type, method, context) => new(
         directory: Path.Combine(projectDirectory, "Snapshots"),
         typeName: type.Name,
         methodName: method.Name));
 ```
-<sup><a href='/src/Verify.Tests/Snippets/Snippets.cs#L57-L65' title='Snippet source file'>snippet source</a> | <a href='#snippet-derivepathinfo' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Verify.Tests/Snippets/Snippets.cs#L57-L65' title='Snippet source file'>snippet source</a> | <a href='#snippet-derivepath' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Return null to any of the values to use the standard behavior. The returned path can be relative to the directory sourceFile exists in.
 
-`DerivePathInfo` can also be useful when deriving the storage directory on a [build server](build-server.md#custom-directory-and-file-name)
+`DerivePath` can also be useful when deriving the storage directory on a [build server](build-server.md#custom-directory-and-file-name)
 
-A `DerivePathInfo` convention can be shipped as a NuGet, for example [Spectre.Verify.Extensions](https://github.com/spectresystems/spectre.verify.extensions) which adds an attribute driven file naming convention to Verify.
+A `DerivePath` convention can be shipped as a NuGet, for example [Spectre.Verify.Extensions](https://github.com/spectresystems/spectre.verify.extensions) which adds an attribute driven file naming convention to Verify.
 
 
-### Default DerivePathInfo
+### Default DerivePath
 
-<!-- snippet: defaultDerivePathInfo -->
-<a id='snippet-defaultderivepathinfo'></a>
+<!-- snippet: defaultDerivePath -->
+<a id='snippet-defaultderivepath'></a>
 ```cs
 internal static PathInfo DeriveDefault(
     string sourceFile,
     string projectDirectory,
     Type type,
-    MethodInfo method) =>
+    MethodInfo method,
+    IReadOnlyDictionary<string, object> context) =>
     new(
         directory: IoHelpers.ResolveDirectoryFromSourceFile(sourceFile),
         typeName: type.NameWithParent(),
         methodName: method.Name);
 ```
-<sup><a href='/src/Verify/DerivePaths/PathInfo.cs#L23-L34' title='Snippet source file'>snippet source</a> | <a href='#snippet-defaultderivepathinfo' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Verify/DerivePaths/PathInfo.cs#L23-L35' title='Snippet source file'>snippet source</a> | <a href='#snippet-defaultderivepath' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Where `NameWithParent` is

@@ -85,18 +85,18 @@ Publish the staged files as a build artifact:
 
 ## Custom directory and file name
 
-In some scenarios, as part of a build, the test assemblies are copied to a different directory or machine to be run. In this case custom code will be required to derive the path to the `.verified.` files. This can be done using [DerivePathInfo](naming.md#derivepathinfo).
+In some scenarios, as part of a build, the test assemblies are copied to a different directory or machine to be run. In this case custom code will be required to derive the path to the `.verified.` files. This can be done using [DerivePath](naming.md#derivepath).
 
 For example a possible implementation for [AppVeyor](https://www.appveyor.com/) could be:
 
-<!-- snippet: DerivePathInfoAppVeyor -->
-<a id='snippet-derivepathinfoappveyor'></a>
+<!-- snippet: DerivePathAppVeyor -->
+<a id='snippet-derivepathappveyor'></a>
 ```cs
 if (BuildServerDetector.Detected)
 {
     var buildDirectory = Environment.GetEnvironmentVariable("APPVEYOR_BUILD_FOLDER")!;
-    Verifier.DerivePathInfo(
-        (sourceFile, projectDirectory, typeName, methodName) =>
+    Verifier.DerivePath(
+        (sourceFile, projectDirectory, typeName, methodName, context) =>
         {
             var testDirectory = Path.GetDirectoryName(sourceFile)!;
             var testDirectorySuffix = testDirectory.Replace(projectDirectory, string.Empty);
@@ -104,5 +104,5 @@ if (BuildServerDetector.Detected)
         });
 }
 ```
-<sup><a href='/src/Verify.Tests/Snippets/Snippets.cs#L70-L84' title='Snippet source file'>snippet source</a> | <a href='#snippet-derivepathinfoappveyor' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Verify.Tests/Snippets/Snippets.cs#L70-L84' title='Snippet source file'>snippet source</a> | <a href='#snippet-derivepathappveyor' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->

@@ -148,9 +148,9 @@ To access the current Namer `Runtime` or `RuntimeAndVersion` strings use:
 snippet: AccessNamerRuntimeAndVersion
 
 
-## DerivePathInfo
+## DerivePath
 
-`DerivePathInfo` allows the storage directory of `.verified.` files to be customized based on the current context. The contextual parameters are parameters passed are as follows:
+`DerivePath` allows the storage directory of `.verified.` files to be customized based on the current context. The contextual parameters are parameters passed are as follows:
 
  * `sourceFile`: The full path to the file that the test existed in at compile time.
  * `projectDirectory`: The directory that the project existed in at compile time.
@@ -159,18 +159,18 @@ snippet: AccessNamerRuntimeAndVersion
 
 For example to place all `.verified.` files in a `{ProjectDirectory}\Snapshots` the following could be used:
 
-snippet: DerivePathInfo
+snippet: DerivePath
 
 Return null to any of the values to use the standard behavior. The returned path can be relative to the directory sourceFile exists in.
 
-`DerivePathInfo` can also be useful when deriving the storage directory on a [build server](build-server.md#custom-directory-and-file-name)
+`DerivePath` can also be useful when deriving the storage directory on a [build server](build-server.md#custom-directory-and-file-name)
 
-A `DerivePathInfo` convention can be shipped as a NuGet, for example [Spectre.Verify.Extensions](https://github.com/spectresystems/spectre.verify.extensions) which adds an attribute driven file naming convention to Verify.
+A `DerivePath` convention can be shipped as a NuGet, for example [Spectre.Verify.Extensions](https://github.com/spectresystems/spectre.verify.extensions) which adds an attribute driven file naming convention to Verify.
 
 
-### Default DerivePathInfo
+### Default DerivePath
 
-snippet: defaultDerivePathInfo
+snippet: defaultDerivePath
 
 Where `NameWithParent` is
 
